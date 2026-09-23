@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -36,4 +38,15 @@ Route::middleware('auth')->group(function () {
 // Dashboard (protected)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+// Admin Routes
+Route::middleware(['auth', 'role:superadmin'])->prefix('admin')->name('admin.')->group(function () {
+    // User Management
+    Route::resource('users', UserManagementController::class);
+    Route::post('users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
+
+    // Permission Management
+    Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+    Route::post('permissions/toggle', [PermissionController::class, 'toggle'])->name('permissions.toggle');
 });
