@@ -1,9 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Dashboard
-        </h2>
-    </x-slot>
+    <x-slot name="title">Dashboard</x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -22,28 +18,33 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <h4 class="text-sm font-medium text-gray-500">Role Anda</h4>
-                            <p class="text-2xl font-bold text-blue-600 mt-1">
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                            <h4 class="text-sm font-medium text-blue-600">Role</h4>
+                            <p class="text-2xl font-bold text-blue-800 mt-1">
                                 {{ Auth::user()->roles->first()->name ?? 'tidak ada' }}
                             </p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <h4 class="text-sm font-medium text-gray-500">Username</h4>
-                            <p class="text-2xl font-bold text-green-600 mt-1">
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <h4 class="text-sm font-medium text-green-600">Username</h4>
+                            <p class="text-2xl font-bold text-green-800 mt-1">
                                 {{ Auth::user()->username }}
                             </p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <h4 class="text-sm font-medium text-gray-500">Email</h4>
-                            <p class="text-2xl font-bold text-purple-600 mt-1 text-sm">
+                        <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                            <h4 class="text-sm font-medium text-purple-600">Email</h4>
+                            <p class="text-sm font-bold text-purple-800 mt-1">
                                 {{ Auth::user()->email ?? 'Belum diisi' }}
                             </p>
                         </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                            <h4 class="text-sm font-medium text-yellow-600">Status</h4>
+                            <p class="text-2xl font-bold text-yellow-800 mt-1">Aktif</p>
+                        </div>
                     </div>
 
-                    <!-- Info tambahan untuk testing -->
+                    <!-- Info Testing -->
                     <div class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <h4 class="font-semibold text-yellow-800">💡 Info Testing</h4>
                         <ul class="text-sm text-yellow-700 mt-2 space-y-1">
@@ -52,6 +53,7 @@
                             <li>• Password default untuk semua user: <strong
                                     class="font-mono bg-yellow-100 px-2 py-0.5 rounded">password</strong></li>
                             <li>• Username untuk login: NIM (mahasiswa), NIDN (dosen), atau username manual (staff)</li>
+                            <li>• Sidebar bisa di-collapse dengan klik tombol ☰ di pojok kiri atas</li>
                         </ul>
                     </div>
                 </div>
