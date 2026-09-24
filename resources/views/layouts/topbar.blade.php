@@ -1,7 +1,7 @@
 <!-- Topbar -->
 <header
-    class="fixed top-0 right-0 h-16 bg-white shadow-sm z-40 flex items-center justify-between px-6 transition-all duration-300 ease-in-out"
-    :class="sidebarOpen ? 'left-64' : 'left-20'">
+    class="fixed top-0 right-0 left-0 h-16 bg-white shadow-sm z-30 flex items-center justify-between px-6 transition-all duration-300 ease-in-out"
+    :class="sidebarOpen ? 'lg:left-64' : 'lg:left-20'">
 
     <!-- Left: Toggle Button & Title -->
     <div class="flex items-center space-x-4">

@@ -1,7 +1,12 @@
 <!-- Sidebar -->
 <aside
-    class="fixed top-0 left-0 h-screen bg-white border-r border-gray-200 flex flex-col z-50 transition-all duration-300 ease-in-out overflow-y-auto"
-    :class="sidebarOpen ? 'w-64' : 'w-20'">
+    class="fixed top-0 left-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col z-50 transition-all duration-300 ease-in-out overflow-y-auto"
+    :class="{
+        'translate-x-0': sidebarOpen,
+        '-translate-x-full lg:translate-x-0': !sidebarOpen,
+        'lg:w-64': sidebarOpen,
+        'lg:w-20': !sidebarOpen
+    }">
 
     <!-- Logo -->
     <div class="h-16 flex items-center px-6 border-b border-gray-200 flex-shrink-0">
