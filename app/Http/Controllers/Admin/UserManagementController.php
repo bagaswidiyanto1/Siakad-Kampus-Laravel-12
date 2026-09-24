@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\DataTables;
 
 class UserManagementController extends Controller
 {
@@ -18,28 +19,43 @@ class UserManagementController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::with('roles');
+        if ($request->ajax()) {
+            $query = User::with('roles');
 
-        // Filter berdasarkan role
-        if ($request->filled('role')) {
-            $query->whereHas('roles', function ($q) use ($request) {
-                $q->where('name', $request->role);
-            });
+            if ($request->filled('role')) {
+                $query->whereHas('roles', fn($q) => $q->where('name', $request->role));
+            }
+
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('roles', function (User $user) {
+                    return $user->roles
+                        ->map(fn($role) => '<span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">' . e($role->name) . '</span>')
+                        ->implode(' ');
+                })
+                ->addColumn('action', function (User $user) {
+                    $actions = '<a href="' . route('admin.users.edit', $user) . '" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-xs">Edit</a>';
+
+                    if (auth()->id() !== $user->id) {
+                        $actions .= ' <button class="btn-delete-ajax bg-red-600 hover:bg-red-900 text-white font-bold py-1 px-3 rounded text-xs"
+                            data-url="' . route('admin.users.destroy', $user->id) . '"
+                            data-name="User ' . e($user->name) . '">Hapus</button>';
+                    }
+
+                    $actions .= ' <form action="' . route('admin.users.reset-password', $user) . '" method="POST" class="inline">
+                                <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                <button type="submit" class="bg-yellow-600 hover:bg-yellow-900 text-white font-bold py-1 px-3 rounded text-xs">Reset Pass</button>
+                              </form>';
+
+                    return $actions;
+                })
+                ->rawColumns(['roles', 'action'])
+                ->make(true);
         }
 
-        // Filter berdasarkan username
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('username', 'like', '%' . $request->search . '%')
-                    ->orWhere('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%');
-            });
-        }
-
-        $users = $query->latest()->paginate(10);
         $roles = Role::all();
 
-        return view('admin.users.index', compact('users', 'roles'));
+        return view('admin.users.index', compact('roles'));
     }
 
     /**
@@ -164,8 +180,10 @@ class UserManagementController extends Controller
         // Sync role (hapus role lama, assign role baru)
         $user->syncRoles([$request->role]);
 
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil diupdate');
+        return response()->json([
+            'message' => 'User berhasil diperbarui',
+            'redirect' => route('admin.users.index'), // opsional
+        ]);
     }
 
     /**
@@ -181,8 +199,10 @@ class UserManagementController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User berhasil dihapus');
+        return response()->json([
+            'message' => 'User berhasil dihapus',
+            'redirect' => route('admin.users.index'), // opsional
+        ]);
     }
 
     /**
@@ -194,7 +214,8 @@ class UserManagementController extends Controller
             'password' => Hash::make('password')
         ]);
 
-        return redirect()->back()
-            ->with('success', 'Password berhasil direset ke: password');
+        return response()->json([
+            'message' => 'Password berhasil direset ke: password',
+        ]);
     }
 }
