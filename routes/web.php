@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
@@ -49,4 +50,10 @@ Route::middleware(['auth', 'role:superadmin'])->prefix('admin')->name('admin.')-
     // Permission Management
     Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
     Route::post('permissions/toggle', [PermissionController::class, 'toggle'])->name('permissions.toggle');
+
+    Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+    Route::get('activity-logs/export', [ActivityLogController::class, 'export'])->name('activity-logs.export');
+    Route::get('activity-logs/{id}', [ActivityLogController::class, 'show'])->name('activity-logs.show');
+    Route::delete('activity-logs/{id}', [ActivityLogController::class, 'destroy'])->name('activity-logs.destroy');
+    Route::delete('activity-logs', [ActivityLogController::class, 'clear'])->name('activity-logs.clear');
 });
