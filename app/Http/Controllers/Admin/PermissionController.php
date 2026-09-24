@@ -6,22 +6,51 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Yajra\DataTables\DataTables;
 
 class PermissionController extends Controller
 {
     /**
      * Tampilkan halaman kelola permission
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::with('permissions')->get();
-        $permissions = Permission::all()->groupBy(function ($permission) {
-            // Kelompokkan permission berdasarkan prefix
-            $parts = explode('.', $permission->name);
-            return $parts[0] ?? 'other';
-        });
+        $roles = Role::orderBy('name')->get();
 
-        return view('admin.permissions.index', compact('roles', 'permissions'));
+        if ($request->ajax()) {
+            $query = Permission::query()->orderBy('name');
+
+            $dt = DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('group', fn(Permission $p) => explode('.', $p->name)[0] ?? 'other');
+
+            // 1 kolom per role
+            foreach ($roles as $role) {
+                $dt->addColumn('role_' . $role->name, function (Permission $permission) use ($role) {
+                    $checked  = $role->hasPermissionTo($permission) ? 'checked' : '';
+                    $disabled = $role->name === 'superadmin' ? 'disabled' : '';
+                    $textBg = $role->name === 'superadmin' ? 'text-gray-400 focus:ring-gray-400 cursor-no-drop' : 'text-blue-600 focus:ring-blue-400 cursor-pointer';
+
+                    return '<div class="text-center">
+                    <input type="checkbox"
+                        class="permission-toggle h-4 w-4 rounded border-gray-300 ' . $textBg . '"
+                        data-role="' . e($role->name) . '"
+                        data-permission="' . e($permission->name) . '"
+                        ' . $checked . ' ' . $disabled . '>
+                </div>';
+                });
+            }
+
+            // Daftar kolom yang berisi HTML
+            $raw = ['group'];
+            foreach ($roles as $role) {
+                $raw[] = 'role_' . $role->name;
+            }
+
+            return $dt->rawColumns($raw)->make(true);
+        }
+
+        return view('admin.permissions.index', compact('roles'));
     }
 
     /**
