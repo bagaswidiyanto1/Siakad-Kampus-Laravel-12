@@ -46,12 +46,16 @@
                 </button>
                 <div x-show="masterOpen && sidebarOpen" x-transition x-cloak class="mt-1 space-y-1 pl-8">
                     @can('master.akademik.manage')
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Fakultas</a>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Program
-                            Studi</a>
-                        <a href="#"
+                        <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">Akademik</div>
+                        <a href="{{ route('master.fakultas.index') }}"
+                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg {{ request()->routeIs('master.fakultas.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                            Fakultas
+                        </a>
+                        <a href="{{ route('master.prodi.index') }}"
+                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg {{ request()->routeIs('master.program-studi.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                            Program Studi
+                        </a>
+                        <a href="{{ route('master.tahun-akademik.index') }}"
                             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Tahun
                             Akademik</a>
                         <a href="#"

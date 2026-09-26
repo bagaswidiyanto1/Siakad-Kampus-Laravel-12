@@ -5,7 +5,10 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\FakultasController;
+use App\Http\Controllers\Master\ProgramStudiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Master\TahunAkademikController;
 use Illuminate\Support\Facades\Route;
 
 // ==========================================
@@ -39,6 +42,13 @@ Route::middleware('auth')->group(function () {
 // Dashboard (protected)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('master')->name('master.')->group(function () {
+        Route::resource('fakultas', FakultasController::class)
+            ->parameters(['fakultas' => 'fakultas']);
+        Route::resource('prodi', ProgramStudiController::class);
+        Route::resource('tahun-akademik', TahunAkademikController::class);
+    });
 });
 
 // Admin Routes
