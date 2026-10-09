@@ -5,8 +5,20 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\DosenController;
+use App\Http\Controllers\Master\KurikulumController;
 use App\Http\Controllers\Master\FakultasController;
+use App\Http\Controllers\Master\JenisPengajuanController;
+use App\Http\Controllers\Master\KategoriBukuController;
+use App\Http\Controllers\Master\KelasController;
+use App\Http\Controllers\Master\KomponenBiayaController;
+use App\Http\Controllers\Master\MataKuliahController;
 use App\Http\Controllers\Master\ProgramStudiController;
+use App\Http\Controllers\Master\PtAsalController;
+use App\Http\Controllers\Master\RuangController;
+use App\Http\Controllers\Master\SekolahAsalController;
+use App\Http\Controllers\Master\SlotWaktuController;
+use App\Http\Controllers\Master\StaffController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Master\TahunAkademikController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +60,28 @@ Route::middleware(['auth'])->group(function () {
             ->parameters(['fakultas' => 'fakultas']);
         Route::resource('prodi', ProgramStudiController::class);
         Route::resource('tahun-akademik', TahunAkademikController::class);
+        Route::resource('kurikulum', KurikulumController::class);
+        Route::resource('mata-kuliah', MataKuliahController::class);
+        Route::resource('kelas', KelasController::class)
+            ->parameters(['kelas' => 'kelas']);
+
+        Route::resource('dosen', DosenController::class);
+        Route::post('dosen/{dosen}/reset-password', [DosenController::class, 'resetPassword'])->name('dosen.reset-password');
+
+        Route::resource('staff', StaffController::class);
+        Route::post('staff/{staff}/reset-password', [StaffController::class, 'resetPassword'])->name('staff.reset-password');
+
+        // Biaya
+        Route::resource('komponen-biaya', KomponenBiayaController::class);
+        Route::resource('ruang', RuangController::class);
+        Route::resource('slot-waktu', SlotWaktuController::class);
+
+        Route::resource('sekolah-asal', SekolahAsalController::class);
+        Route::resource('pt-asal', PtAsalController::class);
+
+        Route::resource('kategori-buku', KategoriBukuController::class);
+
+        Route::resource('jenis-pengajuan', JenisPengajuanController::class);
     });
 });
 

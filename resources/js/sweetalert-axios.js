@@ -182,7 +182,7 @@ function initDeleteButtons() {
                     text: `${itemName} akan dihapus permanen.`,
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "", // purple, sesuai tema kamu
+                    confirmButtonColor: "#e32323", // purple, sesuai tema kamu
                     cancelButtonColor: "#6b7280",
                     confirmButtonText: "Ya, hapus",
                     cancelButtonText: "Batal",

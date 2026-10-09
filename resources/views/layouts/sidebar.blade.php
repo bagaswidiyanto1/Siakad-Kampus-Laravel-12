@@ -58,29 +58,61 @@
                         <a href="{{ route('master.tahun-akademik.index') }}"
                             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Tahun
                             Akademik</a>
-                        <a href="#"
+                        <a href="{{ route('master.kurikulum.index') }}"
                             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Kurikulum</a>
-                        <a href="#"
+                        <a href="{{ route('master.mata-kuliah.index') }}"
                             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Mata
                             Kuliah</a>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Kelas</a>
+                        <a href="{{ route('master.kelas.index') }}"
+                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg ">Kelas</a>
+                        <!-- DOSEN & STAFF -->
+                        <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">KEPEGAWAIAN</div>
+                        <a href="{{ route('master.dosen.index') }}"
+                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg {{ request()->routeIs('master.dosen.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                            Dosen
+                        </a>
+                        <a href="{{ route('master.staff.index') }}"
+                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg {{ request()->routeIs('master.staff.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                            Staff
+                        </a>
                     @endcan
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">BIAYA</div>
                     @can('master.biaya.manage')
-                        <a href="#"
+                        <a href="{{ route('master.komponen-biaya.index') }}"
                             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Komponen
                             Biaya</a>
                     @endcan
+
+
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">SARANA</div>
+                    <a href="{{ route('master.ruang.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Ruang</a>
+                    <a href="{{ route('master.slot-waktu.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Slot
+                        Waktu</a>
+
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">Kemahasiswaan</div>
+                    <a href="{{ route('master.sekolah-asal.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Sekolah
+                        Asal</a>
+                    <a href="{{ route('master.pt-asal.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">PT
+                        Asal</a>
+
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">PERPUSTAKAAN</div>
                     @can('master.perpus.manage')
-                        <a href="#"
+                        <a href="{{ route('master.kategori-buku.index') }}"
                             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Kategori
                             Buku</a>
                     @endcan
-                    @can('master.pengajuan.manage')
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg">Jenis
-                            Pengajuan</a>
-                    @endcan
+
+                    <!-- BATCH 4: Pengajuan -->
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-2 mb-1">Pengajuan</div>
+                    <a href="{{ route('master.jenis-pengajuan.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-blue-600 rounded-lg {{ request()->routeIs('master.jenis-pengajuan.*') ? 'bg-blue-50 text-blue-600' : '' }}">
+                        Jenis Pengajuan
+                    </a>
+
                 </div>
             </div>
         @endcanany
