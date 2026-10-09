@@ -82,17 +82,15 @@
 
     <script>
         document.addEventListener('click', function(e) {
-            const input = e.target.closest('input[type="time"]');
+            const input = e.target.closest('input[type="date"], input[type="time"], input[type="datetime-local"]');
+            if (!input) return;
 
-            if (!input) {
-                return;
-            }
-
+            // Jangan trigger ulang kalau picker sudah terbuka
             if (typeof input.showPicker === 'function') {
                 try {
                     input.showPicker();
-                } catch (error) {
-                    // Browser tidak mendukung atau picker tidak dapat dibuka
+                } catch (err) {
+                    // Browser tidak support atau picker sudah terbuka
                 }
             }
         });

@@ -25,6 +25,11 @@ class Fakultas extends Model
         return $this->hasMany(User::class);
     }
 
+    public function programStudi()
+    {
+        return $this->hasMany(ProgramStudi::class);
+    }
+
     // Activity Log
     public function getActivitylogOptions(): LogOptions
     {

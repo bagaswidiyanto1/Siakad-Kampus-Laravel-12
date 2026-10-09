@@ -101,15 +101,46 @@ function initAjaxForms() {
                         Swal.close();
 
                         if (error.response && error.response.status === 422) {
-                            // Validation error Laravel
-                            const errors = error.response.data.errors;
-                            const messages = Object.values(errors)
-                                .flat()
-                                .join("<br>");
+                            const errors = error.response.data.errors || {};
+                            const items = Object.entries(errors)
+                                .map(([field, messages]) => {
+                                    const label = field
+                                        .replace(/_/g, " ")
+                                        .replace(/\b\w/g, (c) =>
+                                            c.toUpperCase(),
+                                        );
+                                    const msg = Array.isArray(messages)
+                                        ? messages[0]
+                                        : messages;
+                                    return `
+                                            <li class="flex items-start gap-2 text-left">
+                                                <svg class="w-5 h-5 flex-shrink-0 text-red-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+                                                </svg>
+                                                <div class="flex flex-col">
+                                                    <span class="text-xs font-semibold uppercase tracking-wide text-red-600">${label}</span>
+                                                    <span class="text-sm text-gray-700">${msg}</span>
+                                                </div>
+                                            </li>
+                                        `;
+                                })
+                                .join("");
+
                             Swal.fire({
                                 icon: "error",
                                 title: "Validasi Gagal",
-                                html: messages,
+                                html: `
+                                        <ul class="mt-2 space-y-2 max-h-72 overflow-y-auto pr-1">
+                                            ${items}
+                                        </ul>
+                                    `,
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#7c3aed",
+                                width: 480,
+                                customClass: {
+                                    popup: "rounded-2xl",
+                                    title: "text-gray-900",
+                                },
                             });
                         } else {
                             Swal.fire({
