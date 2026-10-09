@@ -135,7 +135,7 @@ function initAjaxForms() {
                                         </ul>
                                     `,
                                 confirmButtonText: "OK",
-                                confirmButtonColor: "#7c3aed",
+                                confirmButtonColor: "",
                                 width: 480,
                                 customClass: {
                                     popup: "rounded-2xl",
@@ -182,7 +182,7 @@ function initDeleteButtons() {
                     text: `${itemName} akan dihapus permanen.`,
                     icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: "#7c3aed", // purple, sesuai tema kamu
+                    confirmButtonColor: "", // purple, sesuai tema kamu
                     cancelButtonColor: "#6b7280",
                     confirmButtonText: "Ya, hapus",
                     cancelButtonText: "Batal",

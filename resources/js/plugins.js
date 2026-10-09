@@ -1,3 +1,4 @@
+import AutoNumeric from "autonumeric";
 import TomSelect from "tom-select";
 import "tom-select/dist/css/tom-select.css";
 
@@ -36,3 +37,19 @@ function initPlugins() {
 }
 
 document.addEventListener("DOMContentLoaded", initPlugins);
+
+// ======================================================
+// AutoNumeric
+// ======================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("[data-number]").forEach((element) => {
+        new AutoNumeric(element, {
+            digitGroupSeparator: ",",
+            decimalCharacter: ".",
+            decimalPlaces: 0,
+            minimumValue: "0",
+            unformatOnSubmit: true,
+        });
+    });
+});

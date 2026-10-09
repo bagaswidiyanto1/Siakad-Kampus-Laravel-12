@@ -77,9 +77,10 @@ class ProgramStudiController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'message' => 'Validasi gagal!',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         ProgramStudi::create([

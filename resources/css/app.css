@@ -264,3 +264,8 @@ table.dataTable tbody tr:hover {
 .ts-dropdown-content::-webkit-scrollbar-track {
     background-color: #f3f4f6;
 }
+
+/* Timer progress bar di SweetAlert2 toast */
+.swal2-timer-progress-bar {
+    background: rgb(36, 99, 237) !important;   /* ungu, sesuai tema */
+}
