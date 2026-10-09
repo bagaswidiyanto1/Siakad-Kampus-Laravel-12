@@ -43,7 +43,7 @@
 
                         <div class="mb-4">
                             <label for="jenjang" class="block text-sm font-medium text-gray-700">Jenjang *</label>
-                            <select name="jenjang" id="jenjang" required
+                            <select data-tom-select name="jenjang" id="jenjang" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Pilih Jenjang</option>
                                 <option value="D3" {{ old('jenjang', $prodi->jenjang) == 'D3' ? 'selected' : '' }}>
@@ -64,7 +64,7 @@
 
                         <div class="mb-4">
                             <label for="fakultas_id" class="block text-sm font-medium text-gray-700">Fakultas *</label>
-                            <select name="fakultas_id" id="fakultas_id" required
+                            <select data-tom-select name="fakultas_id" id="fakultas_id" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Pilih Fakultas</option>
                                 @foreach ($fakultas as $item)

@@ -42,7 +42,7 @@
 
                         <div class="mb-4">
                             <label for="semester" class="block text-sm font-medium text-gray-700">Semester *</label>
-                            <select name="semester" id="semester" required
+                            <select data-tom-select name="semester" id="semester" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">Pilih Semester</option>
                                 <option value="ganjil" {{ old('semester') == 'ganjil' ? 'selected' : '' }}>Ganjil
