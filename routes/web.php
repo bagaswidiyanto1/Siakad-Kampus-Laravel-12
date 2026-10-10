@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Master\DosenController;
 use App\Http\Controllers\Master\KurikulumController;
@@ -83,6 +84,21 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('jenis-pengajuan', JenisPengajuanController::class);
     });
+
+    // ==========================================
+    // BIODATA
+    // ==========================================
+    Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
+    Route::get('/biodata/create', [BiodataController::class, 'create'])->name('biodata.create');
+    Route::post('/biodata', [BiodataController::class, 'store'])->name('biodata.store');
+    Route::get('/biodata/{id}/edit', [BiodataController::class, 'edit'])->name('biodata.edit');
+    Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+
+    Route::post('/biodata/{id}/riwayat', [BiodataController::class, 'addRiwayat'])->name('biodata.riwayat.store');
+    Route::delete('/biodata/riwayat/{id}', [BiodataController::class, 'deleteRiwayat'])->name('biodata.riwayat.delete');
+
+    // Mahasiswa - upload foto di Biodata
+    Route::delete('/biodata/delete-foto', [BiodataController::class, 'deleteFoto'])->name('biodata.delete-foto');
 });
 
 // Admin Routes
